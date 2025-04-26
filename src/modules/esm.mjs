@@ -2,8 +2,8 @@ import { sep, dirname, join } from "path";
 import { release, version } from "os";
 import { createServer as createServerHttp } from "http";
 import { readFile } from "fs/promises";
-import { fileURLToPath } from 'url';
-import "./files/c.js";
+import { fileURLToPath } from "url";
+import "./files/c.cjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
