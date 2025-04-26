@@ -1,6 +1,7 @@
 import { rename as renameFile, access } from "node:fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { FS_OPERATION_FAILED_ERROR } from "./constants.js";
 
 const filePath = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -12,12 +13,11 @@ const filePathToRename = join(
   "files",
   "properFilename.md"
 );
-const errorMessage = "FS operation failed";
 
 const checkIfDestinationFileExists = async () => {
   try {
     await access(filePathToRename);
-    throw new Error(errorMessage);
+    throw new Error(FS_OPERATION_FAILED_ERROR);
   } catch (err) {
     if (err.code !== "ENOENT") {
       throw err;
@@ -31,9 +31,8 @@ const rename = async () => {
   try {
     await renameFile(filePath, filePathToRename);
   } catch (err) {
-    console.log("err ", err);
     if (err.code === "ENOENT") {
-      throw new Error(errorMessage);
+      throw new Error(FS_OPERATION_FAILED_ERROR);
     }
   }
 };

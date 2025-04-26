@@ -1,9 +1,9 @@
 import { readdir } from "node:fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { FS_OPERATION_FAILED_ERROR } from "./constants.js";
 
 const directory = join(dirname(fileURLToPath(import.meta.url)), "files");
-const errorMessage = "FS operation failed";
 
 const list = async () => {
   try {
@@ -12,7 +12,7 @@ const list = async () => {
     console.log(fileNames);
   } catch (err) {
     if (err.code === "ENOENT") {
-      throw new Error(errorMessage);
+      throw new Error(FS_OPERATION_FAILED_ERROR);
     }
   }
 };

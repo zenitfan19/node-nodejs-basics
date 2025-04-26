@@ -1,6 +1,7 @@
 import { writeFile, access } from "node:fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { FS_OPERATION_FAILED_ERROR } from "./constants.js";
 
 const create = async () => {
   const filePath = join(
@@ -9,11 +10,10 @@ const create = async () => {
     "fresh.txt"
   );
   const fileContent = "I am fresh and young";
-  const fileExistsError = "FS operation failed";
 
   try {
     await access(filePath);
-    throw new Error(fileExistsError);
+    throw new Error(FS_OPERATION_FAILED_ERROR);
   } catch (err) {
     if (err.code !== "ENOENT") {
       throw err;
