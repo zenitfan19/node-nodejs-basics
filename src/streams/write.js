@@ -14,6 +14,14 @@ const write = async () => {
   );
   const writeableStream = createWriteStream(filePath, { encoding: "utf8" });
 
+  writeableStream.on("open", () => {
+    console.log("Stream opened successfully. Type your text:\n");
+  });
+
+  writeableStream.on("finish", () => {
+    console.log("\nStream closed successfully.");
+  });
+
   try {
     await writePipeline(process.stdin, writeableStream);
   } catch (err) {
